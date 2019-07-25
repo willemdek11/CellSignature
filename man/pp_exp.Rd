@@ -4,7 +4,7 @@
 \alias{pp_exp}
 \title{Pre-processing expression matrix}
 \usage{
-pp_exp(exp)
+pp_exp(exp, sig)
 }
 \arguments{
 \item{exp}{Dataframe of transcriptomic data (natural scale) containing genes as rows and samples as columns. Note: Gene names should be set as row names and duplicates are not allowed. Missing values are not allowed within the expression matrix. Check example- head(example_data): \code{\link{example_data}}.}
@@ -13,5 +13,5 @@ pp_exp(exp)
 Expression dataframe
 }
 \description{
-Subsets the user's dataset based on the genes that are common to the users dataset and ImSig.
+Subsets the user's dataset based on the genes that are common to the users dataset and Signature genes.
 }
