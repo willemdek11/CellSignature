@@ -14,7 +14,7 @@ feature_select <- function(exp,sig, r = 0.6){
   for (i in levels(sig$cell)){
     sig_subb <- sig[sig$cell %in% i,]
     exp_subb <- exp[as.character(sig_subb$gene),]
-    cor_data <- corr_matrix (exp_subb, sig, i, r)
+    cor_data <- corr_matrix(exp_subb, sig, i, r)
     fg_subb <- apply(cor_data,1,function(x)!all(x==0))
     fg_subb <- row.names(cor_data[fg_subb,fg_subb])
     fg_all <- c(fg_all, fg_subb)

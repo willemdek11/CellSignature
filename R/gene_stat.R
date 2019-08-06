@@ -31,11 +31,18 @@ gene_stat <- function(exp, sig = sig, r = 0.6){
     feature_len <- length(feature_sub$gene)
 
     sig_cor <- e_cor_data[as.character(exp_sub$gene), as.character(exp_sub$gene)]
-    s_cor <- round(median(apply(sig_cor, 1, median, na.rm = T)), 2)
 
+    s_cor <- tryCatch(
+      {
+        round(median(apply(sig_cor, 1, median, na.rm = T)), 2)
+      },
+      error = function(cond) {
+        return(NA)
+      })
 
     feature_cor <- e_cor_data[as.character(feature_sub$gene), as.character(feature_sub$gene)]
     f_cor <- round(median(apply(feature_cor, 1, median, na.rm = T)), 2)
+
     stat <- data.frame(c(sig_len, user_len, feature_len, s_cor, f_cor))
     genestat <- cbind(genestat,stat)
   }

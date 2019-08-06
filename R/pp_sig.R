@@ -5,7 +5,9 @@
 
 pp_sig <- function (exp, sig)
 {
-  g <- Reduce(intersect, list(as.character(row.names(exp), sig$gene)))
+  g <- Reduce(intersect, list(as.character(row.names(exp)), sig$gene))
   sig <- sig[sig$gene %in% as.character(g), ]
+  sig$cell <- sub("-", " ", sig$cell, perl = TRUE)
+  sig$cell <- sub(".*_", "", sig$cell, perl = TRUE)
   return(sig)
 }

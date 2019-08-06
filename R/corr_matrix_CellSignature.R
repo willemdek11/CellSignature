@@ -5,12 +5,12 @@
 #' @return Gene-gene correlation matrix of ImSig genes.
 #' @importFrom HiClimR fastCor
 
-corr_matrix <- function(exp, sig, i, r){
+corr_matrix_CellSignature <- function(exp, sig, i, r){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   cor_data <- tryCatch(
     {
-      fastCor(t(exp), verbose = FALSE)
+      fastCor_CellSignature(t(exp), verbose = FALSE)
     },
     error = function(cond) {
       message(paste0(i, " needs more than two signature genes"))
