@@ -1,4 +1,9 @@
-cor_CellSignature <- function(xt)
+#' @title Calculate a more stringent similarity than correlation
+#' @description cor_cs computes the similarity between columns of a dataframe or matrix
+#' @param xt a matrix or data frame.
+#' @return Similarity dataframe
+
+cor_cs <- function(xt)
 {
   n <- ncol(xt)
   m <- matrix(NA, nrow = n, ncol = n)

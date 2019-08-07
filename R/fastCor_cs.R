@@ -1,4 +1,4 @@
-fastCor_CellSignature <- function (xt, nSplit = 1, upperTri = FALSE, optBLAS = FALSE,
+fastCor_cs <- function (xt, nSplit = 1, upperTri = FALSE, optBLAS = FALSE,
           verbose = TRUE)
 {
   varnames <- colnames(xt)
@@ -33,7 +33,7 @@ fastCor_CellSignature <- function (xt, nSplit = 1, upperTri = FALSE, optBLAS = F
       r <- tcrossprod(x/sqrt(rowSums(x^2)))
     }
     else {
-      r <- cor_CellSignature(xt)
+      r <- cor_cs(xt)
     }
   }
   else if (nSplit > 1) {

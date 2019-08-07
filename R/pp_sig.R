@@ -9,5 +9,6 @@ pp_sig <- function (exp, sig)
   sig <- sig[sig$gene %in% as.character(g), ]
   sig$cell <- sub("-", " ", sig$cell, perl = TRUE)
   sig$cell <- sub(".*_", "", sig$cell, perl = TRUE)
+  sig <- mutate_if(sig, is.character, as.factor)
   return(sig)
 }
