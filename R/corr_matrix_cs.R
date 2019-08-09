@@ -4,6 +4,7 @@
 #' @param r Use a value between 0 and 1. Default is 0.6. This is a user defined correlation cut-off to perform feature selection (\code{\link{feature_select}}). Feature selection aids to enrich the prediction of relative abundance of immune cells by filtering off poorly correlated ImSig genes. To get an idea of what cut-off to use check the results of (\code{\link{gene_stat}}) and choose a cut-off that displays high median correlation and maintains a high proportion of genes after feature selection.
 #' @return Gene-gene correlation matrix of ImSig genes.
 #' @importFrom HiClimR fastCor
+#' @export
 
 corr_matrix_cs <- function(exp, sig, i, r){
   exp <- pp_exp(exp, sig)

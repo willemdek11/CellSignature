@@ -12,7 +12,7 @@ feature_select_cs <- function(exp,sig, r = 0.7){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   fg_all <- NULL
-
+  
   for (i in levels(sig$cell)){
     sig_subb <- sig[sig$cell %in% i,]
     exp_subb <- exp[as.character(sig_subb$gene),]
@@ -25,8 +25,8 @@ feature_select_cs <- function(exp,sig, r = 0.7){
       error = function(cond) {
         data.frame(sig_subb$gene, i)
       })
-
-    fg_all <- rbindlist(list(fg_all, fg_subb), use.names = FALSE)
+    
+    try(fg_all <- rbindlist(list(fg_all, fg_subb), use.names = FALSE), silent = TRUE)
   }
   colnames(fg_all) <- c("gene", "cell")
   fg_all <- data.frame(lapply(fg_all, as.character), stringsAsFactors = F)
