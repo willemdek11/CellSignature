@@ -8,13 +8,14 @@
 #' feature_select_cs (exp = example_data, sig = signature_table, r = 0.7)
 #' @export
 
-feature_select_cs <- function(exp,sig, r = 0.7){
+feature_select_low_cs <- function(exp,sig, r = 0.55, l = 0.2){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   fg_all <- NULL
   cor_data <- fastCor_cs(t(exp))
 
   for (i in levels(sig$cell)){
+    HIGH <- TRUE
     cor_subb <- pp_cor(cor_data, sig, i)
 
     npass = c()
@@ -23,14 +24,27 @@ feature_select_cs <- function(exp,sig, r = 0.7){
       npass[j] = sum(cor_subb[j,]> r,na.rm=T)
     }
 
+    if(sum(npass) == dim(cor_subb)[1]){
+      npass = c()
+      for(j in 1:dim(cor_subb)[1])
+      {
+        npass[j] = sum(cor_subb[j,]> l,na.rm=T)
+      }
+      i <- paste0(i , "*")
+      HIGH <- FALSE
+    }
+
     to.keep = (1:dim(cor_subb)[1])[(npass == max(npass))&(npass>0)]
     # only keep the one with the highest total cor:
-    if(length(to.keep)>1){to.keep = (to.keep)[rowSums(cor_subb[to.keep,,drop=FALSE],na.r=T)==max(rowSums(cor_subb[to.keep,,drop=FALSE],na.rm=T))]}
+    if(length(to.keep)>1){
+      to.keep = (to.keep)[rowSums(cor_subb[to.keep,,drop=FALSE],na.r=T)==max(rowSums(cor_subb[to.keep,,drop=FALSE],na.rm=T))]
+      }
 
-    if(length(to.keep)>0)
+    if(length(to.keep)>0 & HIGH)
     {
       genes = row.names(cor_subb[,to.keep,drop=FALSE])[cor_subb[,to.keep] > r]
-    }
+    } else
+      genes = row.names(cor_subb[,to.keep,drop=FALSE])[cor_subb[,to.keep] > l]
 
     fg_subb <- tryCatch(
       {
