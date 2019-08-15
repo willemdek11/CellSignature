@@ -4,7 +4,7 @@
 \alias{corr_matrix_cs}
 \title{Correlation matrix}
 \usage{
-corr_matrix_cs(exp, sig, i, r)
+corr_matrix_cs(exp, sig, i, r = 0.55)
 }
 \arguments{
 \item{exp}{Dataframe of transcriptomic data (natural scale) containing genes as rows and samples as columns. Note: Gene names should be set as row names and duplicates are not allowed. Missing values are not allowed within the expression matrix. Check example- head(example_data): \code{\link{example_data}}.}

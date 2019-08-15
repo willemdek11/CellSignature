@@ -13,11 +13,12 @@ pp_sig <- function (exp, sig)
     for (cell in strsplit(as.character(sig[sig$gene == gene,]$cell), ";")) {
       cell_x <- sub("-", " ", cell, perl = TRUE)
       cell_x <- sub(".*_", "", cell_x, perl = TRUE)
+      cell_x <- trimws(cell_x)
       output_sig <- rbind(output_sig, data.frame(gene = gene, cell = cell_x))
     }
   }
   output_sig <- unique(output_sig)
-
+  
   output_sig <- mutate_if(output_sig, is.character, as.factor)
   return(output_sig)
 }

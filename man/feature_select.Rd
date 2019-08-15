@@ -4,7 +4,7 @@
 \alias{feature_select}
 \title{Feature selection of signature genes}
 \usage{
-feature_select(exp, sig, r = 0.6)
+feature_select(exp, sig, r = 0.55)
 }
 \arguments{
 \item{exp}{Dataframe of transcriptomic data (natural scale) containing genes as rows and samples as columns. Note: Gene names should be set as row names and duplicates are not allowed. Missing values are not allowed within the expression matrix. Check example- head(example_data): \code{\link{example_data}}.}

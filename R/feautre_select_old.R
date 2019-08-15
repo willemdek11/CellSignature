@@ -8,38 +8,24 @@
 #' feature_select_cs (exp = example_data, sig = signature_table, r = 0.7)
 #' @export
 
-feature_select_cs <- function(exp,sig, r = 0.7){
+feature_select_old <- function(exp,sig, r = 0.7){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   fg_all <- NULL
-  cor_data <- fastCor_cs(t(exp))
-
+  
   for (i in levels(sig$cell)){
-    cor_subb <- pp_cor(cor_data, sig, i)
-
-    npass = c()
-    for(j in 1:dim(cor_subb)[1])
-    {
-      npass[j] = sum(cor_subb[j,]> r,na.rm=T)
-    }
-
-    to.keep = (1:dim(cor_subb)[1])[(npass == max(npass))&(npass>0)]
-    # only keep the one with the highest total cor:
-    if(length(to.keep)>1){to.keep = (to.keep)[rowSums(cor_subb[to.keep,,drop=FALSE],na.r=T)==min(rowSums(cor_subb[to.keep,,drop=FALSE],na.rm=T))]}
-
-    if(length(to.keep)>0)
-    {
-      genes = row.names(cor_subb[,to.keep,drop=FALSE])[cor_subb[,to.keep] > r]
-    }
-
+    sig_subb <- sig[sig$cell %in% i,]
+    exp_subb <- exp[as.character(sig_subb$gene),]
+    cor_data <- corr_matrix_cs(exp_subb, sig, i, r)
+    fg_subb <- apply(cor_data,1,function(x)!all(x==0))
     fg_subb <- tryCatch(
       {
-        data.frame(genes, i)
+        data.frame(row.names(cor_data[fg_subb,fg_subb]), i)
       },
       error = function(cond) {
         data.frame(sig_subb$gene, i)
       })
-
+    
     try(fg_all <- rbindlist(list(fg_all, fg_subb), use.names = FALSE), silent = TRUE)
   }
   colnames(fg_all) <- c("gene", "cell")

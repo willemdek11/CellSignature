@@ -1,3 +1,9 @@
+#' @title Pre-processing expression matrix
+#' @description Subsets the user's dataset based on the genes that are common to the users dataset and Signature genes.
+#' @param exp Dataframe of transcriptomic data (natural scale) containing genes as rows and samples as columns. Note: Gene names should be set as row names and duplicates are not allowed. Missing values are not allowed within the expression matrix. Check example- head(example_data): \code{\link{example_data}}.
+#' @return Expression dataframe
+#' @export
+
 fastCor_cs <- function (xt, nSplit = 1, upperTri = FALSE, optBLAS = FALSE,
           verbose = TRUE)
 {

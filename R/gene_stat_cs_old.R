@@ -5,16 +5,15 @@
 #' @return Dataframe of general statistics of ImSig analysis.
 #' @import stats
 #' @importFrom HiClimR fastCor
-#' @importFrom dplyr intersect
 #' @examples
 #' gene_stat (exp = example_data, r = 0.7)
 #' @seealso \code{\link{feature_select}}
 #' @export
 
-gene_stat_cs <- function(exp, sig, r = 0.55){
+gene_stat_cs_old <- function(exp, sig, r = 0.7){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
-  fg <- feature_select_cs(exp, sig, r)
+  fg <- feature_select_old(exp, sig, r)
   e_cor_data <- fastCor_cs(t(exp))
   diag(e_cor_data) = NA
   genestat <- data.frame(matrix(nrow = 5))
@@ -24,10 +23,10 @@ gene_stat_cs <- function(exp, sig, r = 0.55){
     sig_sub <- sig[sig$cell %in% i,]
     sig_len <- length(sig_sub$gene)
 
-    exp_sub <- data.frame(lapply(sig[sig$cell %in% i,], as.character), stringsAsFactors = FALSE)
+    exp_sub <- sig[sig$cell %in% i,]
     user_len <- length(exp_sub$gene)
 
-    feature_sub <- intersect(exp_sub, fg)
+    feature_sub <- exp_sub[as.character(exp_sub$gene) %in% fg$gene,]
     feature_len <- length(feature_sub$gene)
 
     sig_cor <- e_cor_data[as.character(exp_sub$gene), as.character(exp_sub$gene)]

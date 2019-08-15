@@ -6,7 +6,7 @@
 #' @importFrom HiClimR fastCor
 #' @export
 
-corr_matrix_cs <- function(exp, sig, i, r){
+corr_matrix_cs <- function(exp, sig, i, r = 0.55){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   cor_data <- tryCatch(

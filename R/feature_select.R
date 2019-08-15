@@ -7,7 +7,7 @@
 #' feature_select (exp = example_data, r = 0.7)
 #' @export
 
-feature_select <- function(exp,sig, r = 0.6){
+feature_select <- function(exp,sig, r = 0.55){
   exp <- pp_exp(exp, sig)
   sig <- pp_sig(exp, sig)
   fg_all <- list()
