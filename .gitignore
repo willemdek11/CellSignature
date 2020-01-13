@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-heatmap of all genes X samples normalizedData.csv
-ProbeAnnotations_Dana_Fred.csv
-test_CellSignature.R
+*.csv
+*.xlsx
+*.docx
+test_*
